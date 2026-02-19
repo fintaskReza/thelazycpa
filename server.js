@@ -13,16 +13,27 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('.'));
 
-// SMTP Configuration - Set these in Vercel environment variables
-const SMTP_CONFIG = {
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT || 587,
-  secure: process.env.SMTP_SECURE === 'true',
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
-  }
-};
+// SMTP Configuration - Load from centralized credentials or environment variables
+let SMTP_CONFIG;
+
+try {
+  // Try to load from centralized credentials
+  const { getSmtpConfig } = require('/home/openclaw/.openclaw/.credentials/load-credentials.js');
+  SMTP_CONFIG = getSmtpConfig();
+  console.log('✅ Loaded SMTP credentials from centralized storage');
+} catch (err) {
+  // Fallback to environment variables
+  SMTP_CONFIG = {
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT || 587,
+    secure: process.env.SMTP_SECURE === 'true',
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS
+    }
+  };
+  console.log('⚠️  Using SMTP credentials from environment variables');
+}
 
 // Google Sheets Configuration
 const GOOGLE_SHEETS_CONFIG = {
