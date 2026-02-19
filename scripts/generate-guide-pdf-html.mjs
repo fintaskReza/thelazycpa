@@ -196,23 +196,32 @@ const html = `<!doctype html>
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: .08em;
-    color: #4b5563;
-    background: #f3f4f6;
-    padding: 4px 8px;
+    color: #1e3a8a;
+    background: #dbeafe;
+    padding: 5px 10px;
     border-radius: 999px;
     margin-bottom: 10px;
+    font-weight: 700;
   }
   h1 {
     font-size: 31px;
     margin: 0 0 8px;
     line-height: 1.2;
+    background: linear-gradient(90deg, #eef2ff 0%, #f8fafc 100%);
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 12px 14px;
   }
   h2 {
-    font-size: 14px;
+    font-size: 12px;
     margin: 16px 0 7px;
-    color: #111827;
+    color: #1f2937;
     text-transform: uppercase;
-    letter-spacing: .04em;
+    letter-spacing: .06em;
+    background: #f3f4f6;
+    border-left: 4px solid #6366f1;
+    padding: 6px 10px;
+    border-radius: 6px;
   }
   h3 {
     font-size: 13px;
@@ -226,11 +235,12 @@ const html = `<!doctype html>
     margin: 0;
   }
   .example-box {
-    border-left: 3px solid #9ca3af;
-    background: #f9fafb;
-    padding: 10px 12px;
-    border-radius: 4px;
-    color: #111827;
+    border-left: 4px solid #0ea5e9;
+    background: #eff6ff;
+    padding: 12px 14px;
+    border-radius: 8px;
+    color: #0f172a;
+    border: 1px solid #dbeafe;
   }
   ul { margin: 0; padding-left: 18px; }
   .grid {
@@ -240,10 +250,19 @@ const html = `<!doctype html>
     margin-top: 10px;
   }
   .grid > div {
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 12px;
     min-height: 110px;
+    background: #f8fafc;
+  }
+  .grid > div:first-child {
+    background: #ecfeff;
+    border-color: #a5f3fc;
+  }
+  .grid > div:last-child {
+    background: #fff7ed;
+    border-color: #fed7aa;
   }
   .footer-note {
     margin-top: 18px;
