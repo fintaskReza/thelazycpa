@@ -525,6 +525,16 @@ app.get('/guide', (req, res) => {
   res.sendFile(path.join(__dirname, 'guide.html'));
 });
 
+// Serve the guide HTML for viewing/printing
+app.get('/AI-Automation-101.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'AI-Automation-101.html'));
+});
+
+// Download endpoint for the guide
+app.get('/download-guide', (req, res) => {
+  res.sendFile(path.join(__dirname, 'AI-Automation-101.html'));
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 TheLazyCPA server running on port ${PORT}`);
