@@ -124,7 +124,7 @@ function getWelcomeEmail(name) {
         <p>Thanks for downloading the AI & Automation 101 guide!</p>
         
         <p><strong>Download your guide here:</strong><br>
-        <a href="https://thelazycpa.vercel.app/AI-Automation-101.html" 
+        <a href="https://thelazycpa.vercel.app/AI-Automation-101-Minimal.pdf" 
            style="display: inline-block; background: #00ff88; color: #000; padding: 12px 24px; 
                   text-decoration: none; border-radius: 6px; margin: 16px 0; font-weight: bold;">
           📥 Download Guide
@@ -156,7 +156,7 @@ function getWelcomeEmail(name) {
 Thanks for downloading the AI & Automation 101 guide!
 
 Download your guide here:
-https://thelazycpa.vercel.app/AI-Automation-101.html
+https://thelazycpa.vercel.app/AI-Automation-101-Minimal.pdf
 
 What's inside:
 - 12 core concepts explained simply
@@ -607,9 +607,9 @@ app.get('/AI-Automation-101.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'AI-Automation-101.html'));
 });
 
-// Download endpoint for the guide
+// Download endpoint for the guide (actual PDF)
 app.get('/download-guide', (req, res) => {
-  res.sendFile(path.join(__dirname, 'AI-Automation-101.html'));
+  res.sendFile(path.join(__dirname, 'AI-Automation-101-Minimal.pdf'));
 });
 
 // Start server (local) / export app (Vercel serverless)

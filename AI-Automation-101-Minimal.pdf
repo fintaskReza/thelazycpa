@@ -1,0 +1,175 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Length 2994 >>
+stream
+BT
+/F1 11 Tf
+50 790 Td
+(AI & Automation 101) Tj
+0 -15 Td
+(A simple guide by Reza Shahrokhi) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(1\) API Keys) Tj
+0 -15 Td
+(Think of an API key like a hotel key card.) Tj
+0 -15 Td
+(It lets your app prove who it is when talking to another service.) Tj
+0 -15 Td
+(Do: store keys safely, use env vars, rotate leaked keys.) Tj
+0 -15 Td
+(Don't: paste keys in code repos or public docs.) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(2\) Terminal) Tj
+0 -15 Td
+(The terminal is a text control panel for your computer.) Tj
+0 -15 Td
+(You run commands directly instead of clicking around.) Tj
+0 -15 Td
+(Start with: pwd, ls, cd, mkdir, cp, mv, cat.) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(3\) Environment Variables) Tj
+0 -15 Td
+(These are private settings your app reads at runtime.) Tj
+0 -15 Td
+(Use them for credentials and config per environment.) Tj
+0 -15 Td
+(Example: SMTP_HOST, SMTP_USER, SMTP_PASS.) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(4\) Webhooks) Tj
+0 -15 Td
+(A webhook is an automatic message sent when an event happens.) Tj
+0 -15 Td
+(Example: new signup triggers a confirmation email flow.) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(5\) APIs) Tj
+0 -15 Td
+(An API is a structured way for apps to exchange data and actions.) Tj
+0 -15 Td
+(Read docs, test with sample requests, handle errors clearly.) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(6\) Databases) Tj
+0 -15 Td
+(A database stores your system state: users, leads, logs, status.) Tj
+0 -15 Td
+(Pick simple first. Structure clean tables and indexes.) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(7\) Automation Logic) Tj
+0 -15 Td
+(Automation = trigger -> decision -> action -> log.) Tj
+0 -15 Td
+(Always include retries and failure alerts.) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(8\) AI Prompts) Tj
+0 -15 Td
+(Be explicit about role, context, format, and constraints.) Tj
+0 -15 Td
+(Prompt quality directly affects output quality.) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(9\) Human-in-the-loop) Tj
+0 -15 Td
+(Automate execution, but keep approval gates for high-risk actions) Tj
+0 -15 Td
+(like publishing, payments, or customer messaging.) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(10\) Monitoring) Tj
+0 -15 Td
+(If you cannot see failures, you cannot trust automation.) Tj
+0 -15 Td
+(Track health endpoints, error rates, and queue backlogs.) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(11\) Security Basics) Tj
+0 -15 Td
+(Least privilege, rotate secrets, audit logs, and backups.) Tj
+0 -15 Td
+(Security is a process, not a one-time setup.) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(12\) Build Loop) Tj
+0 -15 Td
+(Ship small -> measure -> improve.) Tj
+0 -15 Td
+(The goal is reliable systems, not perfect code on day one.) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(Quick Starter Checklist) Tj
+0 -15 Td
+(- Define one repetitive task to automate this week) Tj
+0 -15 Td
+(- Map trigger, input, output, and owner) Tj
+0 -15 Td
+(- Add fail-safe + notification path) Tj
+0 -15 Td
+(- Test with 10 real examples) Tj
+0 -15 Td
+(- Document and hand over) Tj
+0 -15 Td
+() Tj
+0 -7 Td
+0 -15 Td
+(End) Tj
+ET
+endstream
+endobj
+3 0 obj
+<< /Type /Page /Parent 4 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 2 0 R >>
+endobj
+4 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+5 0 obj
+<< /Type /Catalog /Pages 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000003131 00000 n 
+0000003257 00000 n 
+0000003314 00000 n 
+trailer
+<< /Size 6 /Root 5 0 R >>
+startxref
+3363
+%%EOF
