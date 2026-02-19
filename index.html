@@ -396,6 +396,116 @@
             font-size: 0.875rem;
         }
 
+        /* Waiting List Section */
+        .waiting-list {
+            padding: 100px 0;
+            background-color: var(--bg-secondary);
+        }
+
+        .waiting-list-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .waiting-list-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            transition: all 0.3s;
+        }
+
+        .waiting-list-card:hover {
+            border-color: var(--accent);
+        }
+
+        .waiting-list-card.featured {
+            border-color: var(--accent);
+            position: relative;
+        }
+
+        .waiting-list-card.featured::before {
+            content: "MARCH 2025";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 4px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 4px;
+        }
+
+        .waiting-list-card h3 {
+            font-size: 1.75rem;
+            margin-bottom: 12px;
+        }
+
+        .waiting-list-card .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-size: 1rem;
+        }
+
+        .waiting-list-card .benefits {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .waiting-list-card .benefits li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .waiting-list-card .benefits li::before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .waiting-form input,
+        .waiting-form select,
+        .waiting-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            font-family: inherit;
+        }
+
+        .waiting-form input:focus,
+        .waiting-form select:focus,
+        .waiting-form textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .waiting-form textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .waiting-form button {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .form-message {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
         /* Footer */
         footer {
             padding: 48px 0;
@@ -419,7 +529,8 @@
             }
 
             .lead-magnet-grid,
-            .about-grid {
+            .about-grid,
+            .waiting-list-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -429,6 +540,10 @@
 
             .course-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .waiting-list-card {
+                padding: 24px;
             }
         }
     </style>
@@ -441,7 +556,7 @@
                 <a href="#" class="logo">The<span>Lazy</span>CPA</a>
                 <div class="nav-links">
                     <a href="#guide">Free Guide</a>
-                    <a href="#courses">Courses</a>
+                    <a href="#waiting-list">Courses</a>
                     <a href="#about">About</a>
                 </div>
             </div>
@@ -581,6 +696,149 @@
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- Waiting List Section -->
+    <section class="waiting-list" id="waiting-list">
+        <div class="container">
+            <div class="section-header">
+                <h2>🚀 March 2025 Courses</h2>
+                <p>Join the waiting list for early access and 50% off launch pricing.</p>
+            </div>
+            <div class="waiting-list-grid">
+                <!-- Business Owners Course -->
+                <div class="waiting-list-card featured">
+                    <h3>AI for Business Owners</h3>
+                    <p class="subtitle">Automate your business without hiring developers</p>
+                    <ul class="benefits">
+                        <li>Early access pricing (50% off)</li>
+                        <li>Private community access</li>
+                        <li>Weekly live Q&A sessions</li>
+                        <li>Done-for-you automation templates</li>
+                        <li>Direct access to me for support</li>
+                    </ul>
+                    <form class="waiting-form" id="business-form">
+                        <input type="text" id="business-name" placeholder="Your name" required>
+                        <input type="email" id="business-email" placeholder="your@email.com" required>
+                        <input type="text" id="business-company" placeholder="Company name">
+                        <input type="text" id="business-role" placeholder="Your role">
+                        <input type="url" id="business-linkedin" placeholder="LinkedIn URL (optional)">
+                        <textarea id="business-notes" placeholder="What do you want to automate? (optional)"></textarea>
+                        <button type="submit" class="btn btn-primary" id="business-btn">Join Waiting List →</button>
+                    </form>
+                    <div id="business-message" class="form-message"></div>
+                </div>
+
+                <!-- Accountants Course -->
+                <div class="waiting-list-card featured">
+                    <h3>AI for Accountants</h3>
+                    <p class="subtitle">From data entry to advisory with AI automation</p>
+                    <ul class="benefits">
+                        <li>Early access pricing (50% off)</li>
+                        <li>Accounting-specific workflows</li>
+                        <li>Xero/QuickBooks integrations</li>
+                        <li>Client onboarding automation</li>
+                        <li>CPA CPE credits (pending)</li>
+                    </ul>
+                    <form class="waiting-form" id="accountants-form">
+                        <input type="text" id="accountants-name" placeholder="Your name" required>
+                        <input type="email" id="accountants-email" placeholder="your@email.com" required>
+                        <input type="text" id="accountants-company" placeholder="Firm name">
+                        <input type="text" id="accountants-role" placeholder="Your role (e.g., CPA, Bookkeeper)">
+                        <input type="url" id="accountants-linkedin" placeholder="LinkedIn URL (optional)">
+                        <textarea id="accountants-notes" placeholder="What manual tasks do you want to automate? (optional)"></textarea>
+                        <button type="submit" class="btn btn-primary" id="accountants-btn">Join Waiting List →</button>
+                    </form>
+                    <div id="accountants-message" class="form-message"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Business waiting list form
+            document.getElementById('business-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('business-btn');
+                const msg = document.getElementById('business-message');
+                
+                const data = {
+                    name: document.getElementById('business-name').value,
+                    email: document.getElementById('business-email').value,
+                    company: document.getElementById('business-company').value,
+                    role: document.getElementById('business-role').value,
+                    linkedin_url: document.getElementById('business-linkedin').value,
+                    notes: document.getElementById('business-notes').value,
+                    list_type: 'business_ai'
+                };
+                
+                btn.disabled = true;
+                btn.textContent = 'Joining...';
+                
+                try {
+                    const response = await fetch('/api/waiting-list', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        msg.innerHTML = '<span style="color: var(--accent);">✓ You\'re on the list! Check your email for confirmation.</span>';
+                        btn.textContent = 'Joined!';
+                        document.getElementById('business-form').reset();
+                    } else {
+                        throw new Error(result.error || 'Something went wrong');
+                    }
+                } catch (error) {
+                    msg.innerHTML = '<span style="color: #f87171;">Error: ' + error.message + '</span>';
+                    btn.disabled = false;
+                    btn.textContent = 'Try Again →';
+                }
+            });
+
+            // Accountants waiting list form
+            document.getElementById('accountants-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('accountants-btn');
+                const msg = document.getElementById('accountants-message');
+                
+                const data = {
+                    name: document.getElementById('accountants-name').value,
+                    email: document.getElementById('accountants-email').value,
+                    company: document.getElementById('accountants-company').value,
+                    role: document.getElementById('accountants-role').value,
+                    linkedin_url: document.getElementById('accountants-linkedin').value,
+                    notes: document.getElementById('accountants-notes').value,
+                    list_type: 'accountants_ai'
+                };
+                
+                btn.disabled = true;
+                btn.textContent = 'Joining...';
+                
+                try {
+                    const response = await fetch('/api/waiting-list', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        msg.innerHTML = '<span style="color: var(--accent);">✓ You\'re on the list! Check your email for confirmation.</span>';
+                        btn.textContent = 'Joined!';
+                        document.getElementById('accountants-form').reset();
+                    } else {
+                        throw new Error(result.error || 'Something went wrong');
+                    }
+                } catch (error) {
+                    msg.innerHTML = '<span style="color: #f87171;">Error: ' + error.message + '</span>';
+                    btn.disabled = false;
+                    btn.textContent = 'Try Again →';
+                }
+            });
+        </script>
     </section>
 
     <!-- About Section -->
