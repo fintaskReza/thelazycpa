@@ -493,15 +493,51 @@
                         <li>✓ Black & white printable format</li>
                         <li>✓ No jargon, no fluff</li>
                     </ul>
-                    <!-- EMAIL FORM - Replace with ConvertKit embed tomorrow -->
-                    <form class="email-form" onsubmit="handleSubmit(event)">
+                    <!-- CUSTOM EMAIL FORM -->
+                    <form class="email-form" id="subscribe-form">
+                        <input type="text" id="name-input" placeholder="Your name (optional)">
                         <input type="email" id="email-input" placeholder="your@email.com" required>
-                        <button type="submit" class="btn btn-primary">Send Me The Guide →</button>
+                        <button type="submit" class="btn btn-primary" id="submit-btn">Send Me The Guide →</button>
                     </form>
-                    <!-- 
-                    CONVERTKIT EMBED CODE (Paste here tomorrow):
-                    <script async data-uid="YOUR_UID_HERE" src="https://YOUR_CONVERTKIT_URL.ck.page/YOUR_UID/index.js"></script>
-                    -->
+                    <div id="form-message" style="margin-top: 16px; font-size: 0.9rem;"></div>
+                    
+                    <script>
+                        document.getElementById('subscribe-form').addEventListener('submit', async (e) => {
+                            e.preventDefault();
+                            const btn = document.getElementById('submit-btn');
+                            const msg = document.getElementById('form-message');
+                            const email = document.getElementById('email-input').value;
+                            const name = document.getElementById('name-input').value;
+                            
+                            btn.disabled = true;
+                            btn.textContent = 'Sending...';
+                            
+                            try {
+                                const response = await fetch('/api/subscribe', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ email, name, source: 'website' })
+                                });
+                                
+                                const data = await response.json();
+                                
+                                if (response.ok) {
+                                    msg.innerHTML = '<span style="color: var(--accent);">✓ Check your email! The guide is on its way.</span>';
+                                    btn.textContent = 'Sent!';
+                                    document.getElementById('subscribe-form').reset();
+                                } else if (response.status === 409) {
+                                    msg.innerHTML = '<span style="color: #f87171;">You\'re already subscribed! Check your email for the guide.</span>';
+                                    btn.textContent = 'Already Subscribed';
+                                } else {
+                                    throw new Error(data.error || 'Something went wrong');
+                                }
+                            } catch (error) {
+                                msg.innerHTML = '<span style="color: #f87171);">Error: ' + error.message + '</span>';
+                                btn.disabled = false;
+                                btn.textContent = 'Try Again →';
+                            }
+                        });
+                    </script>
                     <p style="color: var(--text-secondary); font-size: 0.75rem; margin-top: 16px; text-align: center;">No spam. Unsubscribe anytime.</p>
                 </div>
             </div>

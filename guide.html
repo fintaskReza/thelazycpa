@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Your Guide - TheLazyCPA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        p {
+            color: #a0a0a0;
+            font-size: 1.125rem;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background-color: #00ff88;
+            color: #0a0a0a;
+            padding: 16px 32px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            margin-bottom: 16px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .next-steps {
+            background: #111111;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .next-steps h2 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+
+        .next-steps ul {
+            list-style: none;
+        }
+
+        .next-steps li {
+            padding: 12px 0;
+            border-bottom: 1px solid #2a2a2a;
+            color: #a0a0a0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .next-steps li:last-child {
+            border-bottom: none;
+        }
+
+        .next-steps li::before {
+            content: "→";
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .social-links {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        .social-links a {
+            color: #00ff88;
+            text-decoration: none;
+            margin: 0 12px;
+        }
+
+        .social-links a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🎉</div>
+        <h1>Your Guide is Ready!</h1>
+        <p>Thanks for subscribing! Download "AI & Automation 101" below. It's 37 pages of everything I wish I knew when I started.</p>
+        
+        <a href="/AI-Automation-101.pdf" class="download-btn" download>
+            📥 Download Guide (PDF)
+        </a>
+        
+        <p style="font-size: 0.875rem; color: #666;">If download doesn't start automatically, click the button above</p>
+
+        <div class="next-steps">
+            <h2>What to do next:</h2>
+            <ul>
+                <li>Read through the guide (37 pages, ~20 min read)</li>
+                <li>Follow me on LinkedIn for daily AI/automation tips</li>
+                <li>Reply to my DM — tell me what you're building!</li>
+                <li>Join our community of 500+ vibe coders (link coming soon)</li>
+            </ul>
+        </div>
+
+        <div class="social-links">
+            <a href="https://linkedin.com/in/YOUR_PROFILE" target="_blank">LinkedIn</a>
+            <a href="https://twitter.com/YOUR_HANDLE" target="_blank">Twitter/X</a>
+            <a href="/">← Back to homepage</a>
+        </div>
+    </div>
+
+    <script>
+        // Auto-download after 2 seconds
+        setTimeout(() => {
+            const link = document.querySelector('.download-btn');
+            link.click();
+        }, 2000);
+    </script>
+</body>
+</html>
