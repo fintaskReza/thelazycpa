@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 const nodemailer = require('nodemailer');
+const { google } = require('googleapis');
 const path = require('path');
 const fs = require('fs');
 
@@ -35,10 +36,13 @@ try {
   console.log('⚠️  Using SMTP credentials from environment variables');
 }
 
-// Google Sheets Configuration
+// Google Sheets Configuration (recommended for persistent storage on Vercel)
 const GOOGLE_SHEETS_CONFIG = {
   spreadsheetId: process.env.GOOGLE_SHEETS_ID,
-  apiKey: process.env.GOOGLE_API_KEY
+  clientEmail: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+  privateKey: process.env.GOOGLE_PRIVATE_KEY ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n') : null,
+  subscribersSheetName: process.env.GOOGLE_SHEETS_SUBSCRIBERS_TAB || 'Subscribers',
+  waitingListSheetName: process.env.GOOGLE_SHEETS_WAITLIST_TAB || 'WaitingList'
 };
 
 // Create SMTP transporter if credentials exist
@@ -50,8 +54,9 @@ if (SMTP_CONFIG.host && SMTP_CONFIG.auth.user) {
   console.log('⚠️ SMTP not configured - set SMTP_HOST, SMTP_USER, SMTP_PASS env vars');
 }
 
-// Initialize SQLite database
-const db = new sqlite3.Database('./subscribers.db', (err) => {
+// Initialize SQLite database (ephemeral on Vercel; use Google Sheets for persistence)
+const DB_PATH = process.env.DB_PATH || (process.env.VERCEL ? '/tmp/subscribers.db' : './subscribers.db');
+const db = new sqlite3.Database(DB_PATH, (err) => {
   if (err) {
     console.error('Error opening database:', err);
   } else {
@@ -119,7 +124,7 @@ function getWelcomeEmail(name) {
         <p>Thanks for downloading the AI & Automation 101 guide!</p>
         
         <p><strong>Download your guide here:</strong><br>
-        <a href="https://thelazycpa.vercel.app/AI-Automation-101.pdf" 
+        <a href="https://thelazycpa.vercel.app/AI-Automation-101.html" 
            style="display: inline-block; background: #00ff88; color: #000; padding: 12px 24px; 
                   text-decoration: none; border-radius: 6px; margin: 16px 0; font-weight: bold;">
           📥 Download Guide
@@ -151,7 +156,7 @@ function getWelcomeEmail(name) {
 Thanks for downloading the AI & Automation 101 guide!
 
 Download your guide here:
-https://thelazycpa.vercel.app/AI-Automation-101.pdf
+https://thelazycpa.vercel.app/AI-Automation-101.html
 
 What's inside:
 - 12 core concepts explained simply
@@ -220,17 +225,61 @@ Reza
   };
 }
 
-// Google Sheets sync function (placeholder - needs Google API setup)
-async function syncToGoogleSheets(data, sheetName) {
-  if (!GOOGLE_SHEETS_CONFIG.spreadsheetId) {
+// Google Sheets sync (persistent contact storage)
+async function syncToGoogleSheets(data, kind) {
+  if (!GOOGLE_SHEETS_CONFIG.spreadsheetId || !GOOGLE_SHEETS_CONFIG.clientEmail || !GOOGLE_SHEETS_CONFIG.privateKey) {
     console.log('Google Sheets not configured');
     return { success: false, error: 'Google Sheets not configured' };
   }
-  
-  // This would need proper Google API authentication
-  // For now, we'll store in SQLite and provide export functionality
-  console.log('Would sync to Google Sheets:', data);
-  return { success: true };
+
+  try {
+    const auth = new google.auth.JWT(
+      GOOGLE_SHEETS_CONFIG.clientEmail,
+      null,
+      GOOGLE_SHEETS_CONFIG.privateKey,
+      ['https://www.googleapis.com/auth/spreadsheets']
+    );
+
+    const sheets = google.sheets({ version: 'v4', auth });
+
+    const range = kind === 'subscribe'
+      ? `${GOOGLE_SHEETS_CONFIG.subscribersSheetName}!A:G`
+      : `${GOOGLE_SHEETS_CONFIG.waitingListSheetName}!A:I`;
+
+    const values = kind === 'subscribe'
+      ? [[
+          new Date().toISOString(),
+          data.email || '',
+          data.name || '',
+          data.source || 'website',
+          data.email_sent ? 'yes' : 'no',
+          data.smtp_from || '',
+          'thelazycpa'
+        ]]
+      : [[
+          new Date().toISOString(),
+          data.email || '',
+          data.name || '',
+          data.list_type || '',
+          data.company || '',
+          data.role || '',
+          data.linkedin_url || '',
+          data.notes || '',
+          data.email_sent ? 'yes' : 'no'
+        ]];
+
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: GOOGLE_SHEETS_CONFIG.spreadsheetId,
+      range,
+      valueInputOption: 'RAW',
+      requestBody: { values }
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error('Google Sheets sync failed:', error.message);
+    return { success: false, error: error.message };
+  }
 }
 
 // API Routes
@@ -241,7 +290,13 @@ app.get('/api/health', (req, res) => {
     status: 'ok', 
     timestamp: new Date().toISOString(),
     smtp_configured: !!transporter,
-    gsheet_configured: !!GOOGLE_SHEETS_CONFIG.spreadsheetId
+    smtp_host: SMTP_CONFIG?.host || null,
+    smtp_user_set: !!SMTP_CONFIG?.auth?.user,
+    from_email: process.env.FROM_EMAIL || 'reza@thelazycpa.com',
+    gsheet_configured: !!(GOOGLE_SHEETS_CONFIG.spreadsheetId && GOOGLE_SHEETS_CONFIG.clientEmail && GOOGLE_SHEETS_CONFIG.privateKey),
+    gsheet_spreadsheet_set: !!GOOGLE_SHEETS_CONFIG.spreadsheetId,
+    running_on_vercel: !!process.env.VERCEL,
+    db_path: DB_PATH
   });
 });
 
@@ -270,12 +325,22 @@ app.post('/api/subscribe', async (req, res) => {
     // Send welcome email
     const emailTemplate = getWelcomeEmail(name);
     const emailResult = await sendEmail(email, emailTemplate.subject, emailTemplate.html, emailTemplate.text);
+
+    // Persist subscriber to Google Sheets (recommended for Vercel)
+    const gsheetResult = await syncToGoogleSheets({
+      email,
+      name,
+      source: source || 'website',
+      email_sent: emailResult.success,
+      smtp_from: process.env.FROM_EMAIL || 'reza@thelazycpa.com'
+    }, 'subscribe');
     
     res.json({ 
       success: true, 
       message: 'Subscribed successfully',
       email: email,
-      email_sent: emailResult.success
+      email_sent: emailResult.success,
+      gsheet_synced: gsheetResult.success
     });
   });
 });
@@ -318,8 +383,9 @@ app.post('/api/waiting-list', async (req, res) => {
     // Try to sync to Google Sheets
     const gsheetResult = await syncToGoogleSheets({
       email, name, list_type, company, role, linkedin_url, notes,
-      created_at: new Date().toISOString()
-    }, list_type);
+      created_at: new Date().toISOString(),
+      email_sent: emailResult.success
+    }, 'waiting_list');
     
     res.json({ 
       success: true, 
@@ -546,15 +612,19 @@ app.get('/download-guide', (req, res) => {
   res.sendFile(path.join(__dirname, 'AI-Automation-101.html'));
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 TheLazyCPA server running on port ${PORT}`);
-  console.log(`📊 Stats: http://localhost:${PORT}/api/stats`);
-  console.log(`👥 Subscribers: http://localhost:${PORT}/api/subscribers`);
-  console.log(`💬 LinkedIn Queue: http://localhost:${PORT}/api/subscribers/linkedin-queue`);
-  console.log(`📚 Business Waiting List: http://localhost:${PORT}/api/waiting-list/business_ai`);
-  console.log(`📚 Accountants Waiting List: http://localhost:${PORT}/api/waiting-list/accountants_ai`);
-});
+// Start server (local) / export app (Vercel serverless)
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🚀 TheLazyCPA server running on port ${PORT}`);
+    console.log(`📊 Stats: http://localhost:${PORT}/api/stats`);
+    console.log(`👥 Subscribers: http://localhost:${PORT}/api/subscribers`);
+    console.log(`💬 LinkedIn Queue: http://localhost:${PORT}/api/subscribers/linkedin-queue`);
+    console.log(`📚 Business Waiting List: http://localhost:${PORT}/api/waiting-list/business_ai`);
+    console.log(`📚 Accountants Waiting List: http://localhost:${PORT}/api/waiting-list/accountants_ai`);
+  });
+}
+
+module.exports = app;
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
