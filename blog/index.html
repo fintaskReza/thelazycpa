@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TheLazyCPA Blog</title>
+  <meta name="description" content="Practical AI and automation guides for accountants and business owners." />
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --bg-card: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0a0;
+      --accent: #00ff88;
+      --accent-hover: #00cc6a;
+      --border: #2a2a2a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    nav {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-left: 24px;
+    }
+
+    .nav-links a:hover { color: var(--text-primary); }
+
+    header {
+      padding: 56px 0 24px;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      margin-bottom: 8px;
+    }
+
+    p.lead {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    .posts {
+      padding: 24px 0 80px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .post {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .post:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .post a {
+      color: var(--text-primary);
+      text-decoration: none;
+      display: block;
+    }
+
+    .post h2 {
+      font-size: 1.25rem;
+      margin-bottom: 6px;
+    }
+
+    .post p {
+      color: var(--text-secondary);
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 0.8rem;
+      padding: 3px 10px;
+      border: 1px solid rgba(0, 255, 136, 0.25);
+      background: rgba(0, 255, 136, 0.08);
+      border-radius: 999px;
+      color: var(--accent);
+    }
+
+    footer {
+      padding: 36px 0;
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+      text-align: center;
+    }
+
+    footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <div class="nav-content">
+        <a href="/" class="logo">The<span>Lazy</span>CPA</a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/guide">Free guide</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <div class="container">
+      <h1>Blog</h1>
+      <p class="lead">Practical AI and automation guides for accountants and business owners.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="posts">
+      <article class="post">
+        <a href="/blog/ai-courses-for-accountants">
+          <h2>AI courses for accountants (and business owners): what to learn and how to implement safely</h2>
+          <p>A practical guide to picking the right training and turning it into real workflows without creating compliance risk.</p>
+          <span class="tag">accountants</span>
+        </a>
+      </article>
+
+      <article class="post">
+        <a href="/blog/ai-courses-for-business-owners">
+          <h2>AI courses for business owners: learn the 5 workflows that actually move the needle</h2>
+          <p>Skip generic AI theory. Learn the workflows that improve cashflow, sales follow-up, and reporting in weeks.</p>
+          <span class="tag">business owners</span>
+        </a>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p><a href="/">TheLazyCPA</a> · <a href="/guide">Free guide</a></p>
+    </div>
+  </footer>
+</body>
+</html>

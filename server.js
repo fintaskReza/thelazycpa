@@ -602,6 +602,17 @@ app.get('/guide', (req, res) => {
   res.sendFile(path.join(__dirname, 'guide.html'));
 });
 
+// Blog (static HTML)
+app.get('/blog', (req, res) => {
+  res.sendFile(path.join(__dirname, 'blog', 'index.html'));
+});
+
+app.get('/blog/:slug', (req, res) => {
+  // Expect html files under /blog, e.g. /blog/ai-courses-for-accountants
+  const slug = (req.params.slug || '').replace(/[^a-z0-9\-]/gi, '');
+  return res.sendFile(path.join(__dirname, 'blog', `${slug}.html`));
+});
+
 // Serve the guide HTML for viewing/printing
 app.get('/AI-Automation-101.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'AI-Automation-101.html'));
